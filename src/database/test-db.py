@@ -9,6 +9,7 @@ db.row_factory = sqlite3.Row
 # create database
 with open('./database/schema.sql') as schema:
     db.executescript(schema.read())
+add_user(db, "admin", True)
 
 """
 # test add_user
@@ -42,6 +43,7 @@ tools = get_tools(db)
 print(tools)
 """
 
+"""
 add_user(db, "admin", True)
 add_tool(db, "hammer")
 add_tool(db, "screwdriver")
@@ -54,3 +56,4 @@ print(get_user_tools(db, "Stepan"))
 add_tool(db, "wrench")
 print(get_tools(db))
 print(get_user_tools(db, "Stepan"))
+"""

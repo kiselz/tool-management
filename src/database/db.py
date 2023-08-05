@@ -33,7 +33,7 @@ def create_db() -> None:
     with current_app.open_resource('./database/schema.sql') as schema:
         db.executescript(schema.read())
 
-def close_db() -> None:
+def close_db(e=None) -> None:
     """
     Close connection to the db
 
