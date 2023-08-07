@@ -12,7 +12,8 @@ CREATE TABLE users(
 -- Table for tools
 CREATE TABLE tools(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    toolname TEXT UNIQUE NOT NULL
+    toolname TEXT UNIQUE NOT NULL,
+    ammount INTEGER NOT NULL
 );
 
 -- Table for keeping track of tool's usage

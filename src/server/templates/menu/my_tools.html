@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <p>Hello, {{ current_user }}</p>
+    <div class="col-md-3 text-end">
+        <a href="{{ url_for('menu.show_menu') }}" class="text-decoration-none"> 
+            <button type="button" class="btn btn-outline-primary me-2">Back</button>
+        </a>
+    </div>
+    <div class="col-md-3 text-end">
+        <a href="{{ url_for('login.logout') }}" class="text-decoration-none"> 
+            <button type="button" class="btn btn-outline-primary me-2">Logout</button>
+        </a>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+    {% if user_tools|length == 0 %}
+        <h3 class="text-align-center">Currently you don't have any tools</h3>
+    {% else %}
+    <h3 class="text-align-center">Your tools:</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Toolname</th>
+                <th>Ammount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tool in user_tools %}
+                {% if tool['ammount'] > 0 %}
+                    <tr>
+                        <td>{{ tool['toolname'] }}</td>
+                        <td id="{{ tool['toolname'] }}-ammount">{{ tool['ammount'] }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <form id="returnToolForm" method="POST">
+        <h3>Return back tools</h3>
+        <select id="returnToolSelect" class="form-select mb-3" aria-label="Choose tool to return" name="tool_to_return" required>
+            <option selected disabled value="">Choose tool to return</option>
+            {% for tool in user_tools %}
+                {% if tool['ammount'] > 0 %}
+                    <option name="{{ tool['toolname'] }}">{{ tool["toolname"] }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <label for="returnToolAmmount">Ammount to return</label>
+        <input type="number" class="form-control mb-3" id="returnToolAmmount" min="1" max="1">
+        <input type="submit" class="form-control btn btn-primary" value="Submit">
+
+    </form>
+    {% endif %}
+
+    {% if available_tools|length != 0 %}
+    <form id="takeToolForm" method="POST">
+        <h3 class="text-align-center">Take available tools</h3>
+        <select class="form-select mb-3" id="takeToolSelect" aria-lebel="Take available tools" name="tool_to_take" required>
+            <option selected disabled value="">Choose tool to take</option>
+            {% for tool in available_tools %}
+                <option name="{{ tool['toolname'] }}">{{ tool['toolname'] }}</option>
+            {% endfor %}
+        </select>
+        <label for="takeToolAmmount">Ammount to take</label>
+        <input type="number" class="form-control mb-3" id="takeToolAmmount" min="1" max="1">
+        <input type="submit" class="form-control btn btn-primary" value="Submit">
+    </form>
+    {% else %}
+    <h3 class="text-align-center">Currently there are no tools available for taking!</h3>
+    {% endif %}
+
+    <script>
+        var URL_API_GET_AVAILABLE = "{{ url_for('api.get_available') }}";
+        var URL_API_TAKE_TOOL = "{{ url_for('api.take_tool') }}";
+        var URL_API_RETURN_TOOL = "{{ url_for('api.return_tool') }}"
+        var CURRENT_USER = "{{ session['user'] }}";
+    </script>
+    <script src="{{ url_for('static', filename='my_tools.js') }}"></script>
+{% endblock %}

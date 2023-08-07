@@ -81,6 +81,14 @@ def add_user(db: Connection, firstname: str, admin_rights: bool) -> None:
 
     db.commit()
 
+def is_user_admin(db: Connection, firstname: str) -> bool:
+    """
+    Return whether the user is admin or not
+    """
+
+    user_row = db.cursor().execute(f"SELECT (admin_rights) FROM users WHERE firstname = '{firstname}'").fetchone()
+    return bool(user_row['admin_rights'])
+
 def delete_user(db: Connection, firstname: str) -> None:
     """
     Delete the user based on a firstname
@@ -108,16 +116,53 @@ def get_tools(db: Connection) -> list[str]:
     tools = db.cursor().execute('SELECT * FROM tools').fetchall()
     return convert_rows_to_dicts(tools)
 
-def add_tool(db: Connection, toolname: str) -> None:
+def get_tool_ammount(db: Connection, toolname: str) -> int:
+    """
+    Get overall tool ammount
+
+    Parameters:
+    db (Connection): sqlite3 connection to a db (sqlite3.connect())
+    toolname (str): name of the tool
+
+    Returns:
+    ammount (int): overall amount of the tool
+    """
+
+    tool_row = db.cursor().execute(f"SELECT ammount FROM tools WHERE toolname = '{toolname}'").fetchone()
+    return tool_row['ammount']
+
+def get_user_tool_ammount(db: Connection, firstname: str, toolname: str) -> int:
+    """
+    Get ammount of the tool obtained by the user
+
+    Parameters:
+    db (Connection): sqlite3 connection to a db (sqlite3.connect())
+    firstname (str): user's firstname
+    toolname (int): Name of a tool
+
+    Returns:
+    ammount (int): ammount of the tool obtained by the user
+    """
+
+    user_tools = get_user_tools(db, firstname)
+    for tool in user_tools:
+        if tool['toolname'] == toolname:
+            return tool['ammount']
+    
+    # user don't have this tool, return 0
+    return 0
+
+def add_tool(db: Connection, toolname: str, ammount: int) -> None:
     """
     Add a new tool
 
     Parameters:
     db (Connection): sqlite3 connection to a db (sqlite3.connect())
     toolname (str): Name of a tool
+    ammount (int): ammount of tool
     """
 
-    db.execute(f"INSERT INTO tools(toolname) VALUES ('{toolname}')")
+    db.execute(f"INSERT INTO tools(toolname, ammount) VALUES ('{toolname}', '{ammount}')")
     users = get_users(db)
     if (len(users) != 0):
         for user_row in users:
@@ -126,6 +171,20 @@ def add_tool(db: Connection, toolname: str) -> None:
                 continue
             firstname = user_row['firstname']
             db.execute(f"INSERT INTO tool_track(firstname, toolname, ammount) VALUES ('{firstname}', '{toolname}', 0)")
+    db.commit()
+
+def assign_tool_to_user(db: Connection, firstname: str, toolname: str, ammount: int) -> None:
+    """
+    Assign to a user the tool
+
+    Parameters:
+    db (Connection): sqlite3 connection to a db (sqlite3.connect())
+    firstname (str): user's firstname
+    toolname (str): Name of a tool
+    ammount: (int): how many tools should be assigned
+    """
+
+    db.execute(f"UPDATE tool_track SET ammount = '{ammount}' WHERE firstname = '{firstname}' AND toolname = '{toolname}'")
     db.commit()
 
 def delete_tool(db: Connection, toolname: str) -> None:
@@ -152,5 +211,47 @@ def get_user_tools(db: Connection, firstname: str):
 
     tool_rows = db.cursor().execute(f"SELECT toolname, ammount FROM tool_track WHERE firstname = '{firstname}' \
                                      ORDER BY toolname ASC").fetchall()   
-    return convert_rows_to_dicts(tool_rows)
+    tool_rows = convert_rows_to_dicts(tool_rows)
+    tool_rows = list(
+        filter(lambda tool: tool['ammount'] > 0, tool_rows)
+    )
+    return tool_rows
 
+def get_available_ammount(db: Connection, toolname: str) -> int:
+    """
+    Get availabe ammount of the tool to take
+
+    Parameters:
+    db (Connection): sqlite3 connection to a db (sqlite3.connect())
+
+    Returns:
+    amount (int): ammount of tool that can be taken
+    """
+
+    used_ammount_row = db.cursor().execute(f"SELECT SUM(ammount) as ammount FROM tool_track WHERE toolname = '{toolname}'").fetchone()
+    used_ammount = used_ammount_row['ammount']
+    overall_ammount = get_tool_ammount(db, toolname)
+    return overall_ammount - used_ammount
+
+def get_available_tools(db: Connection) -> list[sqlite3.Row]:
+    """
+    Get tools and their ammount that can be taken by an user
+
+    Parameters:
+    db (Connection): sqlite3 connection to a db (sqlite3.connect())
+
+    Returns:
+    tools (list[sqlite3.Row]): list of tools 
+    """
+
+    tools = get_tools(db)
+    for tool in tools:
+        toolname = tool["toolname"]
+        row = db.cursor().execute(f"SELECT SUM(ammount) as ammount FROM tool_track WHERE toolname = '{toolname}'").fetchone()
+        print(dict(row))
+        tool['ammount'] -= row['ammount']
+    
+    available_tools = list(
+        filter(lambda tool: tool['ammount'] > 0, tools)
+    )
+    return available_tools

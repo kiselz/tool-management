@@ -43,17 +43,15 @@ tools = get_tools(db)
 print(tools)
 """
 
-"""
-add_user(db, "admin", True)
-add_tool(db, "hammer")
-add_tool(db, "screwdriver")
+
+add_tool(db, "hammer", 3)
+add_tool(db, "screwdriver", 3)
 add_user(db, "Max", False)
 
 print(get_user_tools(db, "Max"))
 add_user(db, "Stepan", False)
 print(get_user_tools(db, "Stepan"))
 
-add_tool(db, "wrench")
+add_tool(db, "wrench", 1)
 print(get_tools(db))
 print(get_user_tools(db, "Stepan"))
-"""
