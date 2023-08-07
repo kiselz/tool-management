@@ -45,7 +45,7 @@
             <option selected disabled value="">Choose tool to return</option>
             {% for tool in user_tools %}
                 {% if tool['ammount'] > 0 %}
-                    <option name="{{ tool['toolname'] }}">{{ tool["toolname"] }}</option>
+                    <option value="{{ tool['toolname'] }}">{{ tool["toolname"] }}</option>
                 {% endif %}
             {% endfor %}
         </select>
@@ -62,7 +62,7 @@
         <select class="form-select mb-3" id="takeToolSelect" aria-lebel="Take available tools" name="tool_to_take" required>
             <option selected disabled value="">Choose tool to take</option>
             {% for tool in available_tools %}
-                <option name="{{ tool['toolname'] }}">{{ tool['toolname'] }}</option>
+                <option value="{{ tool['toolname'] }}">{{ tool['toolname'] }}</option>
             {% endfor %}
         </select>
         <label for="takeToolAmmount">Ammount to take</label>

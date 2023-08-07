@@ -19,12 +19,12 @@
         </button>
     </a>
     {% if is_admin %}
-        <a href="/" class="text-decoration-none w-100">
+        <a href="{{ url_for('menu.show_manage_employees') }}" class="text-decoration-none w-100">
             <button class="btn btn-primary w-100 text-align-center" type="button">
                 Manage Employees
             </button>
         </a>
-        <a href="/" class="text-decoration-none w-100">
+        <a href="{{ url_for('menu.show_manage_tools') }}" class="text-decoration-none w-100">
             <button class="btn btn-primary w-100 text-align-center" type="button">
                 Manage Tools
             </button>

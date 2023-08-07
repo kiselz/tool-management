@@ -113,7 +113,7 @@ def get_tools(db: Connection) -> list[str]:
     tools (list[sqlite3.Row]): list of tools
     """
     
-    tools = db.cursor().execute('SELECT * FROM tools').fetchall()
+    tools = db.cursor().execute('SELECT * FROM tools ORDER BY toolname').fetchall()
     return convert_rows_to_dicts(tools)
 
 def get_tool_ammount(db: Connection, toolname: str) -> int:
@@ -212,9 +212,9 @@ def get_user_tools(db: Connection, firstname: str):
     tool_rows = db.cursor().execute(f"SELECT toolname, ammount FROM tool_track WHERE firstname = '{firstname}' \
                                      ORDER BY toolname ASC").fetchall()   
     tool_rows = convert_rows_to_dicts(tool_rows)
-    tool_rows = list(
-        filter(lambda tool: tool['ammount'] > 0, tool_rows)
-    )
+    # tool_rows = list(
+    #     filter(lambda tool: tool['ammount'] > 0, tool_rows)
+    # )
     return tool_rows
 
 def get_available_ammount(db: Connection, toolname: str) -> int:

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <p>Hello, {{ current_user }}</p>
+    <div class="col-md-3 text-end">
+        <a href="{{ url_for('menu.show_menu') }}" class="text-decoration-none"> 
+            <button type="button" class="btn btn-outline-primary me-2">Back</button>
+        </a>
+    </div>
+    <div class="col-md-3 text-end">
+        <a href="{{ url_for('login.logout') }}" class="text-decoration-none"> 
+            <button type="button" class="btn btn-outline-primary me-2">Logout</button>
+        </a>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
