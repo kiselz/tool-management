@@ -15,9 +15,9 @@ def take_tool():
 
     Expected json:
     {
-        firstname: Firstname of the user,
-        toolname: Tool's name to take,
-        ammount: Ammount to take
+        firstname (str): Firstname of the user,
+        toolname (str): Tool's name to take,
+        ammount (str): Ammount to take
     }
     """
     if request.method == 'POST':
@@ -46,9 +46,9 @@ def return_tool():
 
     Expected json:
     {
-        firstname: Firstname of the user
-        toolname: Tool's name to return
-        ammount: ammount of the tool to return
+        firstname (str): Firstname of the user
+        toolname (str): Tool's name to return
+        ammount (int): ammount of the tool to return
     }
     """
     if request.method == 'POST':
@@ -78,7 +78,7 @@ def add_user():
 
     Expected json:
     {
-        firstname: the user's firstname
+        firstname (str): the user's firstname
     }
     """
     if request.method == "POST":
@@ -112,7 +112,7 @@ def delete_user():
 
     Expected json:
     {
-        firstname: Firstname of the user to delete
+        firstname (str): Firstname of the user to delete
     }
     """
     if request.method == 'POST':
@@ -138,9 +138,9 @@ def change_tool_ammount():
 
     Expected json:
     {
-        firstname: firstname of the user,
-        toolname: tool's name,
-        ammount: ammount of the tool,
+        firstname (str): firstname of the user,
+        toolname (str): tool's name,
+        ammount (int): ammount of the tool,
     }
     """
     if request.method == 'POST':
@@ -151,7 +151,7 @@ def change_tool_ammount():
         
         db = db_methods.get_db()
 
-        db_methods.assign_tool_to_user(db, js['firstname'], js['toolname'], js['ammount'])
+        db_methods.assign_tool_to_user(db, js['firstname'], js['toolname'], max(js['ammount'], 0))
         return jsonify(
             {
                 "status": "ok",
@@ -166,7 +166,7 @@ def add_tool():
 
     Expected json:
     {
-        toolname: tool's name to add
+        toolname (str): tool's name to add
     }
     """
     if request.method == 'POST':
@@ -201,7 +201,7 @@ def delete_tool():
 
     Expected json:
     {
-        toolname: tool's name to delete
+        toolname (str): tool's name to delete
     }
     """
     if request.method == 'POST':
