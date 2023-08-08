@@ -49,9 +49,15 @@ def show_my_tools():
 def show_manage_employees():
     current_user = session['user']
     is_admin = session['is_admin']
+
+    db = get_db()
+    users = get_users(db)
+    tools = get_tools(db)
     
     return render_template('admin/manage_employees.html',
                             current_user=current_user,
+                            users=users,
+                            tools=tools,
                            )
 
 @menu_bp.route('/manage_tools', methods=['GET'])
