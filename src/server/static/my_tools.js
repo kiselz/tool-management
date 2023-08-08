@@ -1,5 +1,3 @@
-// console.log(URL_API_GET_AVAILABLE)
-
 takeToolSelect = document.querySelector('#takeToolSelect');
 takeToolForm = document.querySelector('#takeToolForm');
 takeToolAmmount = document.querySelector('#takeToolAmmount');
@@ -19,6 +17,8 @@ async function takeTool() {
     }
 
     const response = await postRequest(URL_API_TAKE_TOOL, data);
+    sessionStorage.setItem("showToast", "true");
+    sessionStorage.setItem("toastMessage", response.message)
     console.log(response);
     location.reload();
 }
@@ -44,6 +44,8 @@ async function returnTool() {
     }
 
     const response = await postRequest(URL_API_RETURN_TOOL, data);
+    sessionStorage.setItem("showToast", "true");
+    sessionStorage.setItem("toastMessage", response.message)
     console.log(response);
     location.reload();
 }

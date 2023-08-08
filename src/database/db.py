@@ -215,19 +215,3 @@ def get_user_tools(db: Connection, firstname: str):
     #     filter(lambda tool: tool['ammount'] > 0, tool_rows)
     # )
     return tool_rows
-
-def get_available_ammount(db: Connection, toolname: str) -> int:
-    """
-    Get availabe ammount of the tool to take
-
-    Parameters:
-    db (Connection): sqlite3 connection to a db (sqlite3.connect())
-
-    Returns:
-    amount (int): ammount of tool that can be taken
-    """
-
-    used_ammount_row = db.cursor().execute(f"SELECT SUM(ammount) as ammount FROM tool_track WHERE toolname = '{toolname}'").fetchone()
-    used_ammount = used_ammount_row['ammount']
-    overall_ammount = get_tool_ammount(db, toolname)
-    return overall_ammount - used_ammount

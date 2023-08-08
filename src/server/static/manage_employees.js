@@ -17,6 +17,8 @@ async function addUser() {
     }
 
     const response = await postRequest(URL_API_ADD_USER, data);
+    sessionStorage.setItem("showToast", "true");
+    sessionStorage.setItem("toastMessage", response.message)
     console.log(response);
     location.reload();
 }
@@ -30,6 +32,8 @@ async function deleteUser() {
     }
 
     const response = await postRequest(URL_API_DELETE_USER, data);
+    sessionStorage.setItem("showToast", "true");
+    sessionStorage.setItem("toastMessage", response.message)
     console.log(response);
     location.reload();
 }
@@ -44,6 +48,8 @@ async function changeAmmount() {
         ammount: userToolAmmount.value,
     }
     const response = await postRequest(URL_API_CHANGE_AMMOUNT, data);
+    sessionStorage.setItem("showToast", "true");
+    sessionStorage.setItem("toastMessage", response.message)
     console.log(response);
     location.reload();
 }
