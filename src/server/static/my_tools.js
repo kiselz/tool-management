@@ -12,21 +12,14 @@ returnToolAmmount = document.querySelector('#returnToolAmmount')
 async function takeTool() {
     event.preventDefault();
 
-    data = {
+    const data = {
         firstname: CURRENT_USER,
         ammount: Number.parseInt(takeToolAmmount.value),
         toolname: takeToolSelect.value,
     }
-    const response = await fetch(URL_API_TAKE_TOOL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
 
-    const result = await response.json();
-    console.log(result);
+    const response = await postRequest(URL_API_TAKE_TOOL, data);
+    console.log(response);
     location.reload();
 }
 if (takeToolForm) takeToolForm.onsubmit = takeTool;
@@ -44,22 +37,14 @@ if (returnToolSelect) returnToolSelect.onchange = setMaxAmmountToReturn;
 async function returnTool() {
     event.preventDefault();
 
-    data = {
+    const data = {
         firstname: CURRENT_USER,
         ammount: Number.parseInt(returnToolAmmount.value),
         toolname: returnToolSelect.value,
     }
 
-
-    const response = await fetch(URL_API_RETURN_TOOL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-    const result = await response.json();
-    console.log(result);
+    const response = await postRequest(URL_API_RETURN_TOOL, data);
+    console.log(response);
     location.reload();
 }
 if (returnToolForm) returnToolForm.onsubmit = returnTool;

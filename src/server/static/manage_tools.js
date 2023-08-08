@@ -18,20 +18,12 @@ window.onload = showToast
 async function addTool() {
     event.preventDefault();
 
-    toolName = addToolName.value;
-    data = {
+    const toolName = addToolName.value;
+    const data = {
         toolname: toolName,
     };
     
-    const request = await fetch(URL_API_ADD_TOOL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-
-    const response = await request.json();
+    const respone = await postRequest(URL_API_ADD_TOOL, data);
     console.log(response)
     if (response["status"] === "error") {
         sessionStorage.setItem("showToast", "true");
@@ -44,19 +36,12 @@ addToolForm.onsubmit = addTool;
 async function deleteTool() {
     event.preventDefault();
 
-    toolName = deleteToolName.value;
-    data = {
+    const toolName = deleteToolName.value;
+    const data = {
         toolname: toolName,
     };
-
-    const request = await fetch(URL_API_DELETE_TOOL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-    const response = await request.json();
+    
+    const response = await postRequest(URL_API_DELETE_TOOL, data);
     console.log(response);
 }
 deleteToolForm.onsubmit = deleteTool;
