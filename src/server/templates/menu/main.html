@@ -2,7 +2,7 @@
 
 {% block header %}
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-    <p>Hello, {{ user }}</p>
+    <p class="m-0">Hello, {{ user }}</p>
     <div class="col-md-3 text-end">
         <a href="{{ url_for('login.logout') }}" class="text-decoration-none"> 
             <button type="button" class="btn btn-outline-primary me-2">Logout</button>
@@ -12,29 +12,31 @@
 {% endblock %}
 
 {% block content %}
-<div class="d-flex gap-2 flex-column justify-content-center align-items-center py-5">
-    <a href="{{ url_for('menu.show_overview') }}" class="text-decoration-none w-100">
-        <button class="btn btn-primary w-100 text-align-center" type="button">
-            Overview
-        </button>
-    </a>
-    {% if is_admin %}
-        <a href="{{ url_for('menu.show_manage_employees') }}" class="text-decoration-none w-100">
-            <button class="btn btn-primary w-100 text-align-center" type="button">
-                Manage Employees
+<section class="content d-flex w-100 flex-column align-items-center justify-content-start justify-self-center">
+    <div class="d-flex gap-3 flex-column justify-content-center align-items-center">
+        <a href="{{ url_for('menu.show_overview') }}" class="text-decoration-none w-100">
+            <button class="btn btn-primary btn-lg w-100 text-align-center" type="button">
+                Overview
             </button>
         </a>
-        <a href="{{ url_for('menu.show_manage_tools') }}" class="text-decoration-none w-100">
-            <button class="btn btn-primary w-100 text-align-center" type="button">
-                Manage Tools
-            </button>
-        </a>
-    {% else %}
-        <a href="{{ url_for('menu.show_my_tools') }}" class="text-decoration-none w-100">
-            <button class="btn btn-primary w-100 text-align-center" type="button">
-                My Tools
-            </button>
-        </a>
-    {% endif %}
-</div>
+        {% if is_admin %}
+            <a href="{{ url_for('menu.show_manage_employees') }}" class="text-decoration-none w-100">
+                <button class="btn btn-primary btn-lg w-100 text-align-center" type="button">
+                    Manage Employees
+                </button>
+            </a>
+            <a href="{{ url_for('menu.show_manage_tools') }}" class="text-decoration-none w-100">
+                <button class="btn btn-primary w-100 btn-lg text-align-center" type="button">
+                    Manage Tools
+                </button>
+            </a>
+        {% else %}
+            <a href="{{ url_for('menu.show_my_tools') }}" class="text-decoration-none w-100">
+                <button class="btn btn-primary btn-lg w-100 text-align-center" type="button">
+                    My Tools
+                </button>
+            </a>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

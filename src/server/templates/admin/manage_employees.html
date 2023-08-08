@@ -2,7 +2,7 @@
 
 {% block header %}
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-    <p>Hello, {{ current_user }}</p>
+    <p class="m-0">Hello, {{ current_user }}</p>
     <div class="col-md-3 text-end">
         <a href="{{ url_for('menu.show_menu') }}" class="text-decoration-none"> 
             <button type="button" class="btn btn-outline-primary me-2">Back</button>
@@ -17,49 +17,52 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST" id="addUserForm">
-    <h3 class="text-align-center">Add new user</h3>
-    <input type="text" id="addUserName" class="form-control mb-3" required>
-    <input type="submit" class="form-control btn btn-primary" value="Submit">
-</form>
+<section class="content d-flex w-100 gap-5 flex-column align-items-center justify-content-start justify-self-center">
+    <form method="POST" id="addUserForm" style="width: 200px;">
+        <h3 class="text-center">Add new user</h3>
+        <label for="addUserName">Firstname</label>
+        <input type="text" id="addUserName" class="form-control mb-3" required>
+        <input type="submit" class="form-control btn btn-primary" value="Submit">
+    </form>
 
-<form method="POST" id="deleteUserForm">
-    <h3 class="text-align-center">Delete the user</h3>
-    <select name="" class="form-control mb-3" id="deleteUserSelect" required>
-        <option selected disabled value="">Choose the user to delete</option>
-        {% for user in users %}
-            {% if not user['admin_rights'] %}
-                <option value="{{ user['firstname'] }}">{{ user['firstname'] }}</option>
-            {% endif %}
-        {% endfor %}
-    </select>
-    <input type="submit" class="form-control btn btn-primary" value="Submit">
-</form>
-<form method="POST" id="userToolForm">
-    <h3 class="text-align-center">Change the tool's ammount</h3>
-    <select name="user" class="form-control mb-3" id="userToolFirstname" required>
-        <option selected disabled value="">Choose the user</option>
-        {% for user in users %}
-            {% if not user['admin_rights'] %}
-                <option value="{{ user['firstname'] }}">{{ user['firstname'] }}</option>
-            {% endif %}
-        {% endfor %}
-    </select>
-    <select name="tool" class="form-control mb-3" id="userToolName" required>
-        <option selected disabled value="">Choose the tool</option>
-        {% for tool in tools %}
-            <option value="{{ tool['toolname'] }}">{{ tool['toolname'] }}</option>
-        {% endfor %}
-    </select>
-    <label for="userToolAmmount">Ammount</label>
-    <input type="number" id="userToolAmmount" class="form-control" min="0">
-    <input type="submit" class="form-control btn btn-primary" value="Submit">
-</form>
+    <form method="POST" id="deleteUserForm" style="width: 200px;">
+        <h3 class="text-center mb-3">Delete the user</h3>
+        <select name="" class="form-control mb-3" id="deleteUserSelect" required>
+            <option selected disabled value="">Choose the user to delete</option>
+            {% for user in users %}
+                {% if not user['admin_rights'] %}
+                    <option value="{{ user['firstname'] }}">{{ user['firstname'] }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input type="submit" class="form-control btn btn-primary" value="Submit">
+    </form>
+    <form method="POST" id="userToolForm" style="width: 400px;">
+        <h3 class="text-center mb-3">Change the tool's ammount</h3>
+        <select name="user" class="form-control mb-3" id="userToolFirstname" required>
+            <option selected disabled value="" class="mb-3">Choose the user</option>
+            {% for user in users %}
+                {% if not user['admin_rights'] %}
+                    <option value="{{ user['firstname'] }}">{{ user['firstname'] }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <select name="tool" class="form-control mb-3" id="userToolName" required>
+            <option selected disabled value="" class="mb-3">Choose the tool</option>
+            {% for tool in tools %}
+                <option value="{{ tool['toolname'] }}">{{ tool['toolname'] }}</option>
+            {% endfor %}
+        </select>
+        <label for="userToolAmmount">Ammount</label>
+        <input type="number" id="userToolAmmount" class="form-control mb-3" min="0">
+        <input type="submit" class="form-control btn btn-primary" value="Submit">
+    </form>
 
-<script>
-    var URL_API_ADD_USER = "{{ url_for('api.add_user') }}";
-    var URL_API_DELETE_USER = "{{ url_for('api.delete_user') }}";
-    var URL_API_CHANGE_AMMOUNT = "{{ url_for('api.change_tool_ammount') }}";
-</script>
-<script src="{{ url_for('static', filename='manage_employees.js') }}"></script>
+    <script>
+        var URL_API_ADD_USER = "{{ url_for('api.add_user') }}";
+        var URL_API_DELETE_USER = "{{ url_for('api.delete_user') }}";
+        var URL_API_CHANGE_AMMOUNT = "{{ url_for('api.change_tool_ammount') }}";
+    </script>
+    <script src="{{ url_for('static', filename='manage_employees.js') }}"></script>
+</section>
 {% endblock %}

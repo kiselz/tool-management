@@ -37,11 +37,13 @@ def show_my_tools():
 
     db = get_db()
     user_tools = get_user_tools(db, current_user)
+    sum_tools = sum(user_tool['ammount'] for user_tool in user_tools)
     tools = get_tools(db)
 
     return render_template('menu/my_tools.html',
                             current_user=current_user,
                             user_tools=user_tools,
+                            sum_tools=sum_tools,
                             tools=tools,
                            )
 

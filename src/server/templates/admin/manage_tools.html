@@ -2,7 +2,7 @@
 
 {% block header %}
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-    <p>Hello, {{ current_user }}</p>
+    <p class="m-0">Hello, {{ current_user }}</p>
     <div class="col-md-3 text-end">
         <a href="{{ url_for('menu.show_menu') }}" class="text-decoration-none"> 
             <button type="button" class="btn btn-outline-primary me-2">Back</button>
@@ -17,27 +17,28 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST" id="deleteToolForm">
-    <h3 class="text-align-center">Delete the tool</h3>
-    <select name="" class="form-control mb-3" id="deleteToolName" required>
-        <option selected disabled value="">Choose the tool</option>
-        {% for tool in tools %}
-            <option value="{{ tool['toolname'] }}">{{ tool['toolname'] }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit" class="form-control btn btn-primary" value="Submit">
-</form>
-<form method="POST" id="addToolForm">
-    <h3 class="text-align-center">Add new tool</h3>
-    <label for="addToolName">Tool name</label>
-    <input type="text" id="addToolName" class="form-control mb-3" required>
-    <input type="submit" class="form-control btn btn-primary" value="Submit">
-</form>
+<section class="content d-flex w-100 gap-5 flex-column align-items-center justify-content-start justify-self-center">
+    <form method="POST" id="addToolForm" style="width: 200px;">
+        <h3 class="text-center mb-3">Add new tool</h3>
+        <label for="addToolName">Tool name</label>
+        <input type="text" id="addToolName" class="form-control mb-3" required>
+        <input type="submit" class="form-control btn btn-primary" value="Submit">
+    </form>
+    <form method="POST" id="deleteToolForm" style="width: 200px;">
+        <h3 class="text-center mb-3">Delete the tool</h3>
+        <select name="" class="form-control mb-3" id="deleteToolName" required>
+            <option selected disabled value="">Choose the tool</option>
+            {% for tool in tools %}
+                <option value="{{ tool['toolname'] }}">{{ tool['toolname'] }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" class="form-control btn btn-primary" value="Submit">
+    </form>
 
-<script>
-    var URL_API_ADD_TOOL = "{{ url_for('api.add_tool') }}";
-    var URL_API_DELETE_TOOL = "{{ url_for('api.delete_tool') }}";
-</script>
-<script src="{{ url_for('static', filename='manage_tools.js') }}"></script>
-
+    <script>
+        var URL_API_ADD_TOOL = "{{ url_for('api.add_tool') }}";
+        var URL_API_DELETE_TOOL = "{{ url_for('api.delete_tool') }}";
+    </script>
+    <script src="{{ url_for('static', filename='manage_tools.js') }}"></script>
+</section>
 {% endblock %}

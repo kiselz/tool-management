@@ -2,7 +2,7 @@
 
 {% block header %}
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-    <p>Hello, {{ current_user }}</p>
+    <p class="m-0">Hello, {{ current_user }}</p>
     <div class="col-md-3 text-end">
         <a href="{{ url_for('menu.show_menu') }}" class="text-decoration-none"> 
             <button type="button" class="btn btn-outline-primary me-2">Back</button>
@@ -17,30 +17,36 @@
 {% endblock %}
 
 {% block content %}
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Firstname</th>
-            {% for tool in tools %}
-                <th>{{ tool["toolname"] }}</th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-            {% if not user["admin_rights"] %}
+<section class="content d-flex w-100 flex-column align-items-center justify-content-start justify-self-center">
+    {% if tools|length == 0 or users|length <= 1 %}
+        <h3>There are no tools and users to show</h3>
+    {% else %}
+        <table class="table table-bordered table-hover" style="width: 90%;">
+            <thead>
                 <tr>
-                    <th>
-                        {{ user["firstname"] }}
-                    </th>
-                    {% for tool in users_tools[user["firstname"]] %}
-                        <td>
-                            {{ tool["ammount"] }}
-                        </td>
+                    <th>Firstname</th>
+                    {% for tool in tools %}
+                        <th>{{ tool["toolname"] }}</th>
                     {% endfor %}
                 </tr>
-            {% endif %}
-        {% endfor %}
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    {% if not user["admin_rights"] %}
+                        <tr>
+                            <th>
+                                {{ user["firstname"] }}
+                            </th>
+                            {% for tool in users_tools[user["firstname"]] %}
+                                <td>
+                                    {{ tool["ammount"] }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</section>
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block header %}
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-    <p>Hello, {{ current_user }}</p>
+    <p class="m-0">Hello, {{ current_user }}</p>
     <div class="col-md-3 text-end">
         <a href="{{ url_for('menu.show_menu') }}" class="text-decoration-none"> 
             <button type="button" class="btn btn-outline-primary me-2">Back</button>
@@ -17,11 +17,12 @@
 {% endblock %}
 
 {% block content %}
-    {% if user_tools|length == 0 %}
+<section class="content d-flex gap-5 w-100 flex-column align-items-center justify-content-start justify-self-center">
+    {% if sum_tools == 0 %}
         <h3 class="text-align-center">Currently you don't have any tools</h3>
     {% else %}
     <h3 class="text-align-center">Your tools:</h3>
-    <table class="table table-hover">
+    <table class="table table-hover table-bordered border border" style="width: 90%;">
         <thead>
             <tr>
                 <th>Toolname</th>
@@ -40,7 +41,7 @@
         </tbody>
     </table>
     <form id="returnToolForm" method="POST">
-        <h3>Return back tools</h3>
+        <h3 class="text-center mb-3">Return back tools</h3>
         <select id="returnToolSelect" class="form-select mb-3" aria-label="Choose tool to return" name="tool_to_return" required>
             <option selected disabled value="">Choose tool to return</option>
             {% for tool in user_tools %}
@@ -58,7 +59,7 @@
 
     {% if tools|length != 0 %}
     <form id="takeToolForm" method="POST">
-        <h3 class="text-align-center">Take available tools</h3>
+        <h3 class="text-center mb-3">Take available tools</h3>
         <select class="form-select mb-3" id="takeToolSelect" aria-lebel="Take available tools" name="tool_to_take" required>
             <option selected disabled value="">Choose tool to take</option>
             {% for tool in tools %}
@@ -79,4 +80,5 @@
         var CURRENT_USER = "{{ session['user'] }}";
     </script>
     <script src="{{ url_for('static', filename='my_tools.js') }}"></script>
+</section>
 {% endblock %}
