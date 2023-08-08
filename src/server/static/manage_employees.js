@@ -45,7 +45,7 @@ async function changeAmmount() {
     const data = {
         firstname: userToolFirstname.value,
         toolname: userToolName.value,
-        ammount: userToolAmmount.value,
+        ammount: Number.parseInt(userToolAmmount.value),
     }
     const response = await postRequest(URL_API_CHANGE_AMMOUNT, data);
     sessionStorage.setItem("showToast", "true");

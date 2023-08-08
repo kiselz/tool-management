@@ -28,6 +28,8 @@ if (takeToolForm) takeToolForm.onsubmit = takeTool;
 // returnToolForm
 function setMaxAmmountToReturn() {
     toolname = returnToolSelect.value
+
+    // not the best idea to get the data from html
     ammount = Number.parseInt(document.querySelector(`#${toolname}-ammount`).textContent);
 
     returnToolAmmount.setAttribute('max', ammount);
