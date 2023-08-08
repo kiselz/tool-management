@@ -79,7 +79,7 @@ def add_tool():
         db = get_db()
 
         try:
-            add_new_tool(db, request.json['toolname'], 999)
+            add_new_tool(db, request.json['toolname'])
         except IntegrityError as error:
             return jsonify(
                 {

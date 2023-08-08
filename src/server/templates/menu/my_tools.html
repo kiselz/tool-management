@@ -56,17 +56,17 @@
     </form>
     {% endif %}
 
-    {% if available_tools|length != 0 %}
+    {% if tools|length != 0 %}
     <form id="takeToolForm" method="POST">
         <h3 class="text-align-center">Take available tools</h3>
         <select class="form-select mb-3" id="takeToolSelect" aria-lebel="Take available tools" name="tool_to_take" required>
             <option selected disabled value="">Choose tool to take</option>
-            {% for tool in available_tools %}
+            {% for tool in tools %}
                 <option value="{{ tool['toolname'] }}">{{ tool['toolname'] }}</option>
             {% endfor %}
         </select>
         <label for="takeToolAmmount">Ammount to take</label>
-        <input type="number" class="form-control mb-3" id="takeToolAmmount" min="1" max="1">
+        <input type="number" class="form-control mb-3" id="takeToolAmmount" min="1">
         <input type="submit" class="form-control btn btn-primary" value="Submit">
     </form>
     {% else %}
@@ -76,7 +76,7 @@
     <script>
         var URL_API_GET_AVAILABLE = "{{ url_for('api.get_available') }}";
         var URL_API_TAKE_TOOL = "{{ url_for('api.take_tool') }}";
-        var URL_API_RETURN_TOOL = "{{ url_for('api.return_tool') }}"
+        var URL_API_RETURN_TOOL = "{{ url_for('api.return_tool') }}";
         var CURRENT_USER = "{{ session['user'] }}";
     </script>
     <script src="{{ url_for('static', filename='my_tools.js') }}"></script>

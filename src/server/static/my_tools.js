@@ -8,23 +8,6 @@ returnToolSelect = document.querySelector('#returnToolSelect');
 returnToolForm = document.querySelector('#returnToolForm');
 returnToolAmmount = document.querySelector('#returnToolAmmount')
 
-// takeToolForm
-async function setMaxAmmountToTake() {
-    toolname = takeToolSelect.value;
-
-    const response = await fetch(URL_API_GET_AVAILABLE, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({toolname: toolname})
-    });
-    const availableAmmount = await response.json();
-    
-    takeToolAmmount.setAttribute('max', availableAmmount);
-}
-if (takeToolSelect) takeToolSelect.onchange = setMaxAmmountToTake;
-
 
 async function takeTool() {
     event.preventDefault();

@@ -2,7 +2,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, request
 )
 from database.db import (
-    get_db, get_user_tools, get_users, get_tools, get_available_tools
+    get_db, get_user_tools, get_users, get_tools
 )
 
 menu_bp = Blueprint('menu', __name__, url_prefix='/menu')
@@ -37,12 +37,12 @@ def show_my_tools():
 
     db = get_db()
     user_tools = get_user_tools(db, current_user)
-    available_tools = get_available_tools(db)
+    tools = get_tools(db)
 
     return render_template('menu/my_tools.html',
                             current_user=current_user,
                             user_tools=user_tools,
-                            available_tools=available_tools,
+                            tools=tools,
                            )
 
 @menu_bp.route('/manage_employees', methods=['GET'])
