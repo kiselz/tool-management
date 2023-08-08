@@ -23,3 +23,5 @@ CREATE TABLE tool_track(
     FOREIGN KEY(firstname) REFERENCES users(firstname) ON DELETE CASCADE
     FOREIGN KEY(toolname) REFERENCES tools(toolname) ON DELETE CASCADE
 );
+
+INSERT INTO users(firstname, admin_rights) VALUES ('admin', 1);

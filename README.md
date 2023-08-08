@@ -12,6 +12,9 @@ source ./venv/bin/activate
 # installing all needed packages
 pip3 install -r requirements.txt
 
+# initalizing the database (create tables and add admin user)
+make init-db
+
 # starting the server
 make run
 ```

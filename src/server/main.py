@@ -7,7 +7,7 @@ import os
 
 
 app = Flask(__name__)
-app.config['DATABASE'] = './database/database.db'
+app.config['DATABASE'] = os.path.join(os.environ['PYTHONPATH'], 'database', 'database.db')
 # close the db after a response
 app.teardown_appcontext(close_db)
 app.secret_key = 'very-secret-key'
