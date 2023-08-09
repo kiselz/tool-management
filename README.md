@@ -36,69 +36,69 @@ Flask + SQLite3 + Bootstrap + Plain JS
 # API Endpoints
 All API Endpoints expect a POST request with JSON object in the body. If some of the expected keys are missing an error message is sent back. None of these require an authentication or cookie header.
 
-+ `api/user/take_tool`: Take a tool for the user. 
++ `api/user/take_tool`: Take a tool for the user.  
 Expected json:
 ```json
 {
-    firstname (str): Firstname of the user,
-    toolname (str): Tool's name to take,
-    ammount (int): Ammount to take
+    "firstname": "Max",
+    "toolname": "wrench",
+    "ammount": 2
 }
 ```
-If an user or tool does not exist, no changes will be made
+If an user or tool does not exist, no changes will be made  
 
-+ `api/user/return_tool`: Return the tool
-```json
++ `api/user/return_tool`: Return the tool  
 Expected json:
+```json
 {
-    firstname (str): Firstname of the user
-    toolname (str): Tool's name to return
-    ammount (int): ammount of the tool to return
+    "firstname": "Max",
+    "toolname": "wrench",
+    "ammount": 2
 }
 ```
-If an user or tool does not exist, no changes will be made
+If an user or tool does not exist, no changes will be made  
 
-+ `api/user/add`: Add new user
++ `api/user/add`: Add new user  
 Expected json:
 ```json
 {
-    firstname (str): the user's firstname
-}
-```
-
-+ `api/user/delete`: Delete the user
-Expected json:
-```json
-{
-    firstname (str): Firstname of the user to delete
-}
-```
-If the user does not exit, no changes will be made
-
-+ `api/user/tool_ammount`: Change how many tools are acquired by the user
-Expected json:
-```json
-{
-    firstname (str): firstname of the user,
-    toolname (str): tool's name,
-    ammount (str): ammount of the tool,
-}
-```
-If an user or tool does not exist, no changes will be made. If ammount is negative then `0` will be set
-
-+ `tool/add`: Add new tool
-Expected json:
-```json
-{
-    toolname (str): tool's name to add
+    "firstname": "Max"
 }
 ```
 
-+ `tool/delete`: Delete the tool
++ `api/user/delete`: Delete the user  
 Expected json:
 ```json
 {
-    toolname (str): tool's name to delete
+    "firstname": "Max"
 }
 ```
-If the tool does not exit, no changes will be made.
+If the user does not exit, no changes will be made  
+
++ `api/user/tool_ammount`: Change how many tools are acquired by the user  
+Expected json:
+```json
+{
+    "firstname": "Max",
+    "toolname": "wrench",
+    "ammount": 2
+}
+```
+If an user or tool does not exist, no changes will be made. If ammount is negative then `0` will be set  
+
++ `tool/add`: Add new tool  
+Expected json:
+```json
+{
+    "toolname": "wrench
+}
+```
+
++ `tool/delete`: Delete the tool  
+Expected json:
+```json
+{
+    "toolname": "wrench"
+}
+```
+If the tool does not exit, no changes will be made.  
