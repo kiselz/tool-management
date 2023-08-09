@@ -90,7 +90,7 @@ If an user or tool does not exist, no changes will be made. If ammount is negati
 Expected json:
 ```json
 {
-    "toolname": "wrench
+    "toolname": "wrench"
 }
 ```
 
