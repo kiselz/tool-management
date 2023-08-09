@@ -9,12 +9,18 @@ menu_bp = Blueprint('menu', __name__, url_prefix='/menu')
 
 @menu_bp.route('/', methods=['GET'])
 def show_menu():
+    if 'user' not in session:
+        return redirect('/')
+    
     user = session['user']
     is_admin = session['is_admin']
     return render_template('menu/main.html', user=user, is_admin=is_admin)
 
 @menu_bp.route('/overview', methods=['GET'])
 def show_overview():
+    if 'user' not in session:
+        return redirect('/')
+    
     current_user = session['user']
     is_admin = session['is_admin']
     
@@ -32,6 +38,9 @@ def show_overview():
 
 @menu_bp.route('/my_tools', methods=['GET'])
 def show_my_tools():
+    if 'user' not in session:
+        return redirect('/')
+    
     current_user = session['user']
     is_admin = session['is_admin']
 
@@ -49,6 +58,9 @@ def show_my_tools():
 
 @menu_bp.route('/manage_employees', methods=['GET'])
 def show_manage_employees():
+    if 'user' not in session:
+        return redirect('/')
+    
     current_user = session['user']
     is_admin = session['is_admin']
 
@@ -64,6 +76,9 @@ def show_manage_employees():
 
 @menu_bp.route('/manage_tools', methods=['GET'])
 def show_manage_tools():
+    if 'user' not in session:
+        return redirect('/')
+
     current_user = session['user']
     is_admin = session['is_admin']
 
